@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>main</title>
+</head>
+<body>
+     
+       
+       <h3 th:if="${failure}" style="color: red" th:text="${failure}"></h3>
+       <h3 th:if="${success}" style="color: green" th:text="${success}"></h3>
+       
+       <br>
+        
+        
+        <div th:if="${list}">
+        <table border="1">
+            <tr>
+                <th>Name</th>
+                <th>Mobile</th>
+                <th>Gender</th>
+                <th>Math</th>
+                <th>Science</th>
+                <th>English</th>
+                <th>Percentage</th>
+                <th>Edit</th>
+                <th>Delete</th>           
+            </tr>
+            
+            <tr th:each="student:${list}">
+              <td th:text="${student.name}"></td>
+              <td th:text="${student.mobile}"></td>
+              <td th:text="${student.gender}"></td>
+              <td th:text="${student.math}"></td>
+              <td th:text="${student.science}"></td>
+              <td th:text="${student.english}"></td>
+              <td th:text="${((student.math+student.science+student.english)*100)/300}"></td>
+              <td><a th:href="'/edit/'+${student.id}"><button>Edit</button></a></td>
+              <td><a th:href="'/delete/'+${student.id}"><button>Delete</button></a></td>        
+            </tr>
+        </table>
+         <br> <br> <br>
+        </div>
+        
+       
+        
+         <a href="/insert"><button>Insert Record</button></a>
+         
+       
+         
+ <div th:if="${insert}">
+  
+    <form action="/insert" method="post">
+    
+      Name : <input type="text" name="name" placeholder="Enter Name"> <br><br>
+      Mobile : <input type="number" name="mobile" placeholder="Enter Mobile Number"> <br><br>
+      Gender : <input type="radio" name="gender" value="male">Male
+               <input type="radio" name="gender" value="female">Female
+               <br><br>
+      Marks :       
+      <br>
+     
+      Math : <input type="text" name="math" placeholder="Enter Math Marks">
+      Science : <input type="text" name="science" placeholder="Enter Science Marks">
+      English : <input type="text" name="english" placeholder="Enter English Marks">
+     
+     <br><br>
+     
+     <input type="submit" value="INSERT">
+     
+   </form>
+              
+         </div>
+         
+         
+         
+  <div th:if="${update}">
+     <form action="/update" method="post" th:object="${student}">
+     
+     <input type="hidden" name="">
+    
+      Name : <input type="text" name="name" th:field="*{name}" placeholder="Enter Name"> <br><br>
+      Mobile : <input type="number" name="mobile" th:field="*{mobile}" placeholder="Enter Mobile Number"> <br><br>
+      Gender : <input type="radio" name="gender" th:field="*{gender}" value="male">Male
+               <input type="radio" name="gender" th:field="*{gender}" value="female">Female
+               <br><br>
+      Marks :       
+      <br>
+     
+      Math : <input type="text" name="math" th:field="*{math}" placeholder="Enter Math Marks">
+      Science : <input type="text" name="science" th:field="*{science}" placeholder="Enter Science Marks">
+      English : <input type="text" name="english" th:field="*{english}" placeholder="Enter English Marks">
+     
+     <br><br>
+     
+     <input type="submit" value="Update">
+         </div>
+         
+         
+         <a href="/fetch"><button>Fetch Records</button></a>
+         
+         <div th:if="${fetch}">
+             <br>
+             <a href="/fetch/name"><button>Fetch By Name</button></a>
+             <a href="/fetch/mobile"><button>Fetch By Mobile</button></a>
+             <a href="/fetch/gender"><button>Fetch By Gender</button></a>
+             <a href="/fetch/marks"><button>Fetch By Marks</button></a>
+             <a href="/fetch/percentage"><button>Fetch By Percentage</button></a> 
+             
+         </div>
+         
+         <div th:if="${field}">
+              <br>
+              <form th:action="'/fetch/'+${field}" method="post">
+              Enter <span th:text="${field}"></span>
+              <input type="text" th:name="${field}" th:placeholder="' Enter '+${field}" required>
+              <button th:text="'search '+${field}"></button>
+              </form>
+         </div>
+         
+         <br><br>  
+        
+
+   
+</body>
+</html>
